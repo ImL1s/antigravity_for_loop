@@ -1,0 +1,26 @@
+# Environment files (DO NOT COMMIT)
+.env
+.env.local
+.env.*.local
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# ShellSpec
+.shellspec-local/
+report/
+coverage/
+
+# Antigravity state (runtime)
+.antigravity/
+
+# Build artifacts
+*.vsix
+dist/

@@ -1,0 +1,6 @@
+# ShellSpec configuration
+--require spec_helper
+
+# Default options
+--format progress
+--warning

@@ -1,0 +1,47 @@
+{
+    "name": "antigravity-for-loop",
+    "displayName": "Antigravity For Loop",
+    "description": "自動迭代修復循環插件：讓 AI 代理持續執行開發任務直到通過所有測試或達到迭代上限。",
+    "version": "0.1.0",
+    "publisher": "antigravity-community",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/iml1s/antigravity_for_loop"
+    },
+    "engines": {
+        "vscode": "^1.80.0"
+    },
+    "categories": [
+        "Other",
+        "Testing"
+    ],
+    "keywords": [
+        "antigravity",
+        "ai",
+        "automation",
+        "testing",
+        "loop",
+        "tdd"
+    ],
+    "activationEvents": [],
+    "main": "./extension.js",
+    "contributes": {
+        "commands": [
+            {
+                "command": "antigravity-for-loop.start",
+                "title": "Antigravity: Start Fix Loop"
+            },
+            {
+                "command": "antigravity-for-loop.cancel",
+                "title": "Antigravity: Cancel Fix Loop"
+            }
+        ]
+    },
+    "scripts": {
+        "test": "shellspec --shell bash",
+        "package": "vsce package",
+        "publish": "ovsx publish"
+    },
+    "devDependencies": {}
+}

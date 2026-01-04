@@ -1,0 +1,67 @@
+{
+    "name": "antigravity_for_loop",
+    "version": "0.1.0",
+    "description": "自動迭代修復循環插件：每次代碼變更後自動執行測試/建構，持續修改直到測試全綠或達到上限。",
+    "author": "Antigravity Community",
+    "repository": "https://github.com/antigravity/antigravity_for_loop",
+    "license": "MIT",
+    "commands": [
+        {
+            "name": "for-loop",
+            "title": "Start Fix Loop",
+            "description": "啟動自主修復循環，反覆編譯測試直到完成",
+            "handler": "commands/for-loop.sh",
+            "snippet": "/for-loop \"${1:任務說明}\" --max-iterations ${2:10} --completion ${3:DONE}"
+        },
+        {
+            "name": "cancel-loop",
+            "title": "Cancel Fix Loop",
+            "description": "取消當前的修復循環迴圈",
+            "handler": "commands/cancel-loop.sh"
+        }
+    ],
+    "skills": [
+        {
+            "name": "antigravity-for-loop",
+            "path": "skills/antigravity-for-loop/SKILL.md",
+            "autoLoad": true
+        }
+    ],
+    "hooks": {
+        "Stop": [
+            {
+                "type": "shell",
+                "command": "hooks/on_stop.sh"
+            }
+        ]
+    },
+    "permissions": [
+        "terminal:execute",
+        "file:read",
+        "file:write",
+        "git:read",
+        "git:write"
+    ],
+    "configuration": {
+        "defaultMaxIterations": {
+            "type": "number",
+            "default": 10,
+            "description": "預設的最大迭代次數"
+        },
+        "autoCreateBranch": {
+            "type": "boolean",
+            "default": true,
+            "description": "是否在開始迴圈時自動建立 Git 分支"
+        },
+        "testCommand": {
+            "type": "string",
+            "default": "npm test",
+            "description": "用於驗證的測試命令"
+        },
+        "stuckDetectionThreshold": {
+            "type": "number",
+            "default": 3,
+            "description": "連續相同錯誤出現幾次判定為卡住"
+        }
+    }
+}
