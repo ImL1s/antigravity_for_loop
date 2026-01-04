@@ -57,6 +57,7 @@ Describe 'for-loop.sh command'
         It '建立狀態檔案'
             When run source ./commands/for-loop.sh "測試任務" --no-branch
             The status should be success
+            The output should include '自動修復迴圈已啟動'
         End
         
         It '已有迴圈時拒絕啟動新迴圈'

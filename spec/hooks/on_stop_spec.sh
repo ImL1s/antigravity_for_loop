@@ -81,6 +81,7 @@ EOF
             
             When run source ./hooks/on_stop.sh
             The status should eq 0
+            The stderr should include '[for-loop]'
         End
     End
     
@@ -93,6 +94,7 @@ EOF
             
             When run source ./hooks/on_stop.sh
             The status should eq 0
+            The stderr should include '[for-loop]'
         End
     End
 End
