@@ -39,25 +39,8 @@ jobs:
       - name: Run Integration Tests
         run: xvfb-run -a npm run test:integration
 
-  test-e2e:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-      
-      - name: Install Dependencies
-        run: npm ci
-      
-      - name: Install Playwright browsers
-        run: npx playwright install chromium
-      
       - name: Run E2E Tests
         run: xvfb-run -a npm run test:e2e
-        continue-on-error: true  # E2E may be flaky on CI
 
   publish:
     needs: test

@@ -1,0 +1,149 @@
+2026-01-04T15:32:19.334Z INFO @wdio/local-runner: Run worker command: run
+2026-01-04T15:32:19.565Z INFO wdio-vscode-service: Start VSCode proxy server on port 55300
+2026-01-04T15:32:19.565Z INFO wdio-vscode-service: Setting up VSCode directory at /private/var/folders/9w/6m1x9qr10zv2p2sztxyyxyq00000gn/T/tmp-45806-kanoANo67QqI/settings/User
+2026-01-04T15:32:19.567Z INFO wdio-vscode-service: Start VSCode: /Users/iml1s/Documents/mine/antigravity_for_loop/node_modules/wdio-vscode-service/dist/chromium/index.js --no-sandbox --disable-updates --skip-welcome --skip-release-notes --disable-workspace-trust --disable-extensions --extension-development-path=/Users/iml1s/Documents/mine/antigravity_for_loop --extension-tests-path=/Users/iml1s/Documents/mine/antigravity_for_loop/node_modules/wdio-vscode-service/dist/proxy/cjs/entry.js --user-data-dir=/private/var/folders/9w/6m1x9qr10zv2p2sztxyyxyq00000gn/T/tmp-45806-kanoANo67QqI/settings --extensions-dir=/private/var/folders/9w/6m1x9qr10zv2p2sztxyyxyq00000gn/T/tmp-45806-kanoANo67QqI/extensions --vscode-binary-path=/Users/iml1s/Documents/mine/antigravity_for_loop/.wdio-vscode-service/vscode-darwin-arm64-1.108.0-insider/Visual Studio Code - Insiders.app/Contents/MacOS/Electron --disable-extensions --skip-welcome --skip-release-notes
+2026-01-04T15:32:19.613Z INFO webdriver: Initiate new session using the WebDriver protocol
+2026-01-04T15:32:19.781Z INFO webdriver: Using Chromedriver v142.0.7444.175 from cache directory /var/folders/9w/6m1x9qr10zv2p2sztxyyxyq00000gn/T
+2026-01-04T15:32:20.787Z INFO @wdio/utils: Started Chromedriver v142 with params --port=55301 --allowed-origins=* --allowed-ips=0.0.0.0 in 1111ms on port 55301
+2026-01-04T15:32:20.801Z INFO webdriver: [POST] http://127.0.0.1:55301/session
+2026-01-04T15:32:20.801Z INFO webdriver: DATA {
+  capabilities: {
+    alwaysMatch: {
+      browserName: 'chrome',
+      browserVersion: '142',
+      'wdio:vscodeOptions': [Object],
+      'goog:chromeOptions': [Object]
+    },
+    firstMatch: [ {} ]
+  },
+  desiredCapabilities: {
+    browserName: 'chrome',
+    browserVersion: '142',
+    'wdio:vscodeOptions': {
+      extensionPath: '/Users/iml1s/Documents/mine/antigravity_for_loop',
+      userSettings: [Object],
+      vscodeArgs: [Object],
+      version: 'insiders',
+      binary: '/Users/iml1s/Documents/mine/antigravity_for_loop/.wdio-vscode-service/vscode-darwin-arm64-1.108.0-insider/Visual Studio Code - Insiders.app/Contents/MacOS/Electron'
+    },
+    'goog:chromeOptions': {
+      binary: '/Users/iml1s/Documents/mine/antigravity_for_loop/node_modules/wdio-vscode-service/dist/chromium/index.js',
+      prefs: [Object],
+      args: [Array],
+      windowTypes: [Array]
+    }
+  }
+}
+2026-01-04T15:32:21.646Z WARN webdriver: Request failed with status 500 due to session not created: Chrome instance exited. Examine ChromeDriver verbose log to determine the cause.
+2026-01-04T15:32:21.646Z INFO webdriver: Retrying 1/3
+2026-01-04T15:32:21.646Z INFO webdriver: [POST] http://127.0.0.1:55301/session
+2026-01-04T15:32:21.646Z INFO webdriver: DATA {
+  capabilities: {
+    alwaysMatch: {
+      browserName: 'chrome',
+      browserVersion: '142',
+      'wdio:vscodeOptions': [Object],
+      'goog:chromeOptions': [Object]
+    },
+    firstMatch: [ {} ]
+  },
+  desiredCapabilities: {
+    browserName: 'chrome',
+    browserVersion: '142',
+    'wdio:vscodeOptions': {
+      extensionPath: '/Users/iml1s/Documents/mine/antigravity_for_loop',
+      userSettings: [Object],
+      vscodeArgs: [Object],
+      version: 'insiders',
+      binary: '/Users/iml1s/Documents/mine/antigravity_for_loop/.wdio-vscode-service/vscode-darwin-arm64-1.108.0-insider/Visual Studio Code - Insiders.app/Contents/MacOS/Electron'
+    },
+    'goog:chromeOptions': {
+      binary: '/Users/iml1s/Documents/mine/antigravity_for_loop/node_modules/wdio-vscode-service/dist/chromium/index.js',
+      prefs: [Object],
+      args: [Array],
+      windowTypes: [Array]
+    }
+  }
+}
+2026-01-04T15:32:22.378Z WARN webdriver: Request failed with status 500 due to session not created: Chrome instance exited. Examine ChromeDriver verbose log to determine the cause.
+2026-01-04T15:32:22.378Z INFO webdriver: Retrying 2/3
+2026-01-04T15:32:22.378Z INFO webdriver: [POST] http://127.0.0.1:55301/session
+2026-01-04T15:32:22.378Z INFO webdriver: DATA {
+  capabilities: {
+    alwaysMatch: {
+      browserName: 'chrome',
+      browserVersion: '142',
+      'wdio:vscodeOptions': [Object],
+      'goog:chromeOptions': [Object]
+    },
+    firstMatch: [ {} ]
+  },
+  desiredCapabilities: {
+    browserName: 'chrome',
+    browserVersion: '142',
+    'wdio:vscodeOptions': {
+      extensionPath: '/Users/iml1s/Documents/mine/antigravity_for_loop',
+      userSettings: [Object],
+      vscodeArgs: [Object],
+      version: 'insiders',
+      binary: '/Users/iml1s/Documents/mine/antigravity_for_loop/.wdio-vscode-service/vscode-darwin-arm64-1.108.0-insider/Visual Studio Code - Insiders.app/Contents/MacOS/Electron'
+    },
+    'goog:chromeOptions': {
+      binary: '/Users/iml1s/Documents/mine/antigravity_for_loop/node_modules/wdio-vscode-service/dist/chromium/index.js',
+      prefs: [Object],
+      args: [Array],
+      windowTypes: [Array]
+    }
+  }
+}
+2026-01-04T15:32:23.118Z WARN webdriver: Request failed with status 500 due to session not created: Chrome instance exited. Examine ChromeDriver verbose log to determine the cause.
+2026-01-04T15:32:23.119Z INFO webdriver: Retrying 3/3
+2026-01-04T15:32:23.119Z INFO webdriver: [POST] http://127.0.0.1:55301/session
+2026-01-04T15:32:23.119Z INFO webdriver: DATA {
+  capabilities: {
+    alwaysMatch: {
+      browserName: 'chrome',
+      browserVersion: '142',
+      'wdio:vscodeOptions': [Object],
+      'goog:chromeOptions': [Object]
+    },
+    firstMatch: [ {} ]
+  },
+  desiredCapabilities: {
+    browserName: 'chrome',
+    browserVersion: '142',
+    'wdio:vscodeOptions': {
+      extensionPath: '/Users/iml1s/Documents/mine/antigravity_for_loop',
+      userSettings: [Object],
+      vscodeArgs: [Object],
+      version: 'insiders',
+      binary: '/Users/iml1s/Documents/mine/antigravity_for_loop/.wdio-vscode-service/vscode-darwin-arm64-1.108.0-insider/Visual Studio Code - Insiders.app/Contents/MacOS/Electron'
+    },
+    'goog:chromeOptions': {
+      binary: '/Users/iml1s/Documents/mine/antigravity_for_loop/node_modules/wdio-vscode-service/dist/chromium/index.js',
+      prefs: [Object],
+      args: [Array],
+      windowTypes: [Array]
+    }
+  }
+}
+2026-01-04T15:32:23.849Z ERROR webdriver: Request failed with status 500 due to session not created: session not created: Chrome instance exited. Examine ChromeDriver verbose log to determine the cause.
+2026-01-04T15:32:23.849Z ERROR webdriver: session not created: session not created: Chrome instance exited. Examine ChromeDriver verbose log to determine the cause.
+    at getErrorFromResponseBody (file:///Users/iml1s/Documents/mine/antigravity_for_loop/node_modules/webdriver/build/utils.js:195:12)
+    at NodeJSRequest._request (file:///Users/iml1s/Documents/mine/antigravity_for_loop/node_modules/webdriver/build/request/index.js:193:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async startWebDriverSession (file:///Users/iml1s/Documents/mine/antigravity_for_loop/node_modules/webdriver/build/utils.js:64:20)
+    at async WebDriver.newSession (file:///Users/iml1s/Documents/mine/antigravity_for_loop/node_modules/webdriver/build/index.js:19:45)
+    at async remote (file:///Users/iml1s/Documents/mine/antigravity_for_loop/node_modules/webdriverio/build/index.js:46:22)
+    at async Runner._startSession (file:///Users/iml1s/Documents/mine/antigravity_for_loop/node_modules/@wdio/runner/build/index.js:241:29)
+    at async Runner._initSession (file:///Users/iml1s/Documents/mine/antigravity_for_loop/node_modules/@wdio/runner/build/index.js:207:25)
+    at async Runner.run (file:///Users/iml1s/Documents/mine/antigravity_for_loop/node_modules/@wdio/runner/build/index.js:88:19)
+2026-01-04T15:32:23.849Z ERROR @wdio/runner: Error: Failed to create session.
+session not created: Chrome instance exited. Examine ChromeDriver verbose log to determine the cause.
+    at startWebDriverSession (file:///Users/iml1s/Documents/mine/antigravity_for_loop/node_modules/webdriver/build/utils.js:69:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async WebDriver.newSession (file:///Users/iml1s/Documents/mine/antigravity_for_loop/node_modules/webdriver/build/index.js:19:45)
+    at async remote (file:///Users/iml1s/Documents/mine/antigravity_for_loop/node_modules/webdriverio/build/index.js:46:22)
+    at async Runner._startSession (file:///Users/iml1s/Documents/mine/antigravity_for_loop/node_modules/@wdio/runner/build/index.js:241:29)
+    at async Runner._initSession (file:///Users/iml1s/Documents/mine/antigravity_for_loop/node_modules/@wdio/runner/build/index.js:207:25)
+    at async Runner.run (file:///Users/iml1s/Documents/mine/antigravity_for_loop/node_modules/@wdio/runner/build/index.js:88:19)

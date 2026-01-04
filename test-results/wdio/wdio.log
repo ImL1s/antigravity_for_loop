@@ -1,0 +1,12 @@
+2026-01-04T15:32:09.293Z INFO @wdio/cli:launcher: Run onPrepare hook
+2026-01-04T15:32:09.296Z INFO wdio-vscode-service/launcher: Fetch latest insider release from https://update.code.visualstudio.com/api/releases/insider
+2026-01-04T15:32:10.591Z INFO wdio-vscode-service/launcher: manifest url: https://raw.githubusercontent.com/microsoft/vscode/refs/heads/main/cgmanifest.json
+2026-01-04T15:32:11.085Z INFO wdio-vscode-service/launcher: Download VSCode binary (1.108.0-insider)
+2026-01-04T15:32:18.930Z INFO @wdio/utils: Setting up browser driver for: vscode@142
+2026-01-04T15:32:18.930Z INFO @wdio/utils: Setting up browser binaries for: vscode@142
+2026-01-04T15:32:18.933Z INFO @wdio/cli:launcher: Run onWorkerStart hook
+2026-01-04T15:32:18.933Z INFO @wdio/local-runner: Start worker 0-0 with arg: run,wdio.conf.js
+2026-01-04T15:32:23.957Z INFO @wdio/cli:launcher: Run onWorkerEnd hook
+2026-01-04T15:32:23.957Z INFO @wdio/cli:launcher: Run onComplete hook
+2026-01-04T15:32:23.978Z INFO @wdio/local-runner: Shutting down spawned worker
+2026-01-04T15:32:24.229Z INFO @wdio/local-runner: Waiting for 0 to shut down gracefully

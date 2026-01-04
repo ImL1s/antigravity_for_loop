@@ -57,7 +57,7 @@
         "test:shell": "shellspec --shell bash",
         "test:unit": "mocha test/unit/**/*.test.js",
         "test:integration": "npx @vscode/test-cli",
-        "test:e2e": "npx playwright test test/e2e/playwright.test.js",
+        "test:e2e": "npx @vscode/test-cli --label e2e",
         "test": "npm run test:shell && npm run test:unit",
         "package": "vsce package",
         "publish": "ovsx publish"

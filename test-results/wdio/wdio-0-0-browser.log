@@ -1,0 +1,10 @@
+{"level":"SEVERE","message":"http://localhost:3000/static/build/out/vs/workbench/workbench.web.main.css - Failed to load resource: the server responded with a status of 404 (Not Found)","source":"network","timestamp":1767540661646}
+{"level":"SEVERE","message":"http://localhost:3000/static/build/out/vs/loader.js - Failed to load resource: the server responded with a status of 404 (Not Found)","source":"network","timestamp":1767540661651}
+{"level":"SEVERE","message":"http://localhost:3000/static/build/out/vs/webPackagePaths.js - Failed to load resource: the server responded with a status of 404 (Not Found)","source":"network","timestamp":1767540661651}
+{"level":"SEVERE","message":"http://localhost:3000/static/build/out/vs/workbench/workbench.web.main.nls.js - Failed to load resource: the server responded with a status of 404 (Not Found)","source":"network","timestamp":1767540661651}
+{"level":"SEVERE","message":"http://localhost:3000/static/build/out/vs/workbench/workbench.web.main.js - Failed to load resource: the server responded with a status of 404 (Not Found)","source":"network","timestamp":1767540661651}
+{"level":"SEVERE","message":"http://localhost:3000/static/build/out/vs/code/browser/workbench/workbench.js - Failed to load resource: the server responded with a status of 404 (Not Found)","source":"network","timestamp":1767540661651}
+{"level":"SEVERE","message":"http://localhost:3000/ 49:15 Uncaught TypeError: Cannot convert undefined or null to object","source":"javascript","timestamp":1767540661655}
+{"level":"SEVERE","message":"http://localhost:3000/static/build/manifest.json - Failed to load resource: the server responded with a status of 404 (Not Found)","source":"network","timestamp":1767540661662}
+{"level":"SEVERE","message":"http://localhost:3000/ - Manifest fetch from http://localhost:3000/static/build/manifest.json failed, code 404","source":"other","timestamp":1767540661663}
+{"level":"SEVERE","message":"http://localhost:3000/static/build/favicon.ico - Failed to load resource: the server responded with a status of 404 (Not Found)","source":"network","timestamp":1767540661668}
