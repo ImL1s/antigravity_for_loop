@@ -16,6 +16,7 @@ const path = require('path');
 const { exec } = require('child_process');
 const { CDPManager } = require('./lib/cdp-manager');
 const { Relauncher } = require('./lib/relauncher');
+const { RalphLoop } = require('./lib/ralph-loop');
 
 // Global state
 let statusBarItem;
@@ -23,6 +24,7 @@ let outputChannel;
 let statePollingInterval;
 let autoAcceptInterval;
 let continuationCheckInterval;
+let currentRalphLoop = null;  // Active Ralph Loop instance
 let currentState = null;
 let autoAcceptEnabled = false;
 let lastCheckResult = null;
@@ -877,9 +879,20 @@ function detectAllCommands(workspacePath) {
 }
 
 /**
- * Start loop with improved UX - Quick Start mode
+ * Start loop with improved UX - Ralph Wiggum style!
+ *
+ * Inspired by Claude Code's Ralph Wiggum technique:
+ * - Continuous loop until tests pass or max iterations
+ * - Auto-accept all agent steps
+ * - Re-inject prompt on each iteration with error context
  */
 async function startLoop() {
+    // Check if loop already running
+    if (currentRalphLoop && currentRalphLoop.isRunning) {
+        vscode.window.showWarningMessage('已有迴圈正在執行。請先取消再開始新的。');
+        return;
+    }
+
     const workspaceFolders = vscode.workspace.workspaceFolders;
     if (!workspaceFolders || workspaceFolders.length === 0) {
         vscode.window.showErrorMessage('No workspace folder open');
@@ -919,7 +932,7 @@ async function startLoop() {
         },
         {
             label: '$(eye) AI 自行判斷',
-            description: '讓 AI 決定何時完成（較不精確）',
+            description: 'AI 輸出 "DONE" 時停止',
             value: 'ai',
             command: null
         },
@@ -940,12 +953,20 @@ async function startLoop() {
 
     let checkCommand = completionChoice.command;
 
-    // If custom or no detected command, ask for command
-    if (completionChoice.value === 'custom' || !checkCommand) {
+    // If custom, ask for command
+    if (completionChoice.value === 'custom') {
         checkCommand = await vscode.window.showInputBox({
-            prompt: completionChoice.value === 'custom'
-                ? '輸入驗證命令（成功時 exit 0）'
-                : '未偵測到測試命令，請手動輸入',
+            prompt: '輸入驗證命令（成功時 exit 0）',
+            placeHolder: '例如：npm test, cargo test, pytest, make test',
+            ignoreFocusOut: true
+        });
+        if (!checkCommand) return;
+    }
+
+    // If test mode but no command detected, ask for it
+    if (completionChoice.value === 'test' && !checkCommand) {
+        checkCommand = await vscode.window.showInputBox({
+            prompt: '未偵測到測試命令，請手動輸入',
             placeHolder: '例如：npm test, cargo test, pytest, make test',
             ignoreFocusOut: true
         });
@@ -957,6 +978,7 @@ async function startLoop() {
         { label: '5 次', value: '5', description: '快速嘗試' },
         { label: '10 次', value: '10', description: '推薦' },
         { label: '20 次', value: '20', description: '複雜任務' },
+        { label: '50 次', value: '50', description: '困難任務' },
         { label: '自訂...', value: 'custom' }
     ], {
         placeHolder: '🔄 最大迭代次數',
@@ -965,9 +987,9 @@ async function startLoop() {
 
     if (!maxChoice) return;
 
-    let maxIterations = maxChoice.value;
+    let maxIterations = parseInt(maxChoice.value);
     if (maxChoice.value === 'custom') {
-        maxIterations = await vscode.window.showInputBox({
+        const customMax = await vscode.window.showInputBox({
             prompt: '輸入最大迭代次數 (1-100)',
             value: '10',
             validateInput: (v) => {
@@ -975,108 +997,87 @@ async function startLoop() {
                 return (isNaN(n) || n < 1 || n > 100) ? '請輸入 1-100 的數字' : null;
             }
         });
-        if (!maxIterations) return;
+        if (!customMax) return;
+        maxIterations = parseInt(customMax);
     }
 
-    // Step 4: Enable Auto-Accept?
-    if (!autoAcceptEnabled) {
-        const enableAA = await vscode.window.showQuickPick([
-            { label: '$(check) 是，開啟 Auto-Accept', value: true, description: '推薦 - 全自動執行' },
-            { label: '$(x) 否，手動確認每個步驟', value: false }
-        ], {
-            placeHolder: '🤖 要開啟 Auto-Accept 嗎？'
-        });
-
-        if (enableAA?.value) {
-            autoAcceptEnabled = true;
-            startAutoAcceptLoop();
-        }
-    }
-
-    // Create state and start
-    outputChannel.appendLine('\n' + '='.repeat(50));
-    outputChannel.appendLine(`[Start] 🚀 開始修復迴圈`);
-    outputChannel.appendLine(`[Start] 任務: ${taskDescription}`);
-    outputChannel.appendLine(`[Start] 完成條件: ${completionChoice.label} ${checkCommand ? `(${checkCommand})` : ''}`);
-    outputChannel.appendLine(`[Start] 最大迭代: ${maxIterations}`);
-    outputChannel.appendLine(`[Start] Auto-Accept: ${autoAcceptEnabled ? 'ON' : 'OFF'}`);
-    outputChannel.appendLine('='.repeat(50) + '\n');
+    // Show output channel
     outputChannel.show();
 
-    // Initialize state
-    const statePath = path.join(workspacePath, '.antigravity', 'for-loop-state.json');
-    const stateDir = path.dirname(statePath);
+    // Create and start Ralph Loop
+    currentRalphLoop = new RalphLoop(cdpManager, outputChannel, {
+        maxIterations,
+        testCommand: checkCommand,
+        completionPromise: 'DONE',
+        taskDescription,
+        workspacePath,
+        onProgress: (progress) => {
+            // Update status bar with progress
+            currentState = {
+                status: 'running',
+                iteration: progress.iteration,
+                max_iterations: progress.maxIterations
+            };
+            updateStatusBar();
+        },
+        onComplete: (result) => {
+            // Update status bar when done
+            currentState = {
+                status: result.success ? 'done' : 'failed',
+                iteration: result.iterations,
+                max_iterations: result.maxIterations
+            };
+            updateStatusBar();
 
-    if (!fs.existsSync(stateDir)) {
-        fs.mkdirSync(stateDir, { recursive: true });
-    }
+            // Show notification
+            if (result.success) {
+                vscode.window.showInformationMessage(`✅ 迴圈完成！${result.message}`);
+            } else {
+                vscode.window.showWarningMessage(`❌ 迴圈結束：${result.message}`);
+            }
+        }
+    });
 
-    const initialState = {
+    // Update status bar to show running
+    currentState = {
         status: 'running',
         iteration: 1,
-        max_iterations: parseInt(maxIterations),
-        original_prompt: taskDescription,
-        check_command: checkCommand,
-        completion_type: completionChoice.value,
-        started_at: new Date().toISOString(),
-        last_check: null,
-        stuck_count: 0
+        max_iterations: maxIterations
     };
-
-    fs.writeFileSync(statePath, JSON.stringify(initialState, null, 2));
-    currentState = initialState;
     updateStatusBar();
 
-    // Inject the initial prompt
-    const initialPrompt = `${taskDescription}
-
-請開始執行。完成後執行以下命令來驗證：
-\`\`\`bash
-${checkCommand || '# AI 自行判斷完成狀態'}
-\`\`\`
-
-如果測試失敗，請修復並重試。`;
-
-    try {
-        await cdpManager.injectPrompt(initialPrompt);
-        vscode.window.showInformationMessage('🚀 迴圈已啟動！查看狀態欄監控進度。');
-    } catch (e) {
-        outputChannel.appendLine(`[Error] 無法注入提示: ${e.message}`);
-        vscode.window.showWarningMessage('迴圈已啟動，但無法自動注入提示。請手動輸入任務。');
-    }
+    // Start the loop (async)
+    vscode.window.showInformationMessage(`🚀 Ralph Loop 已啟動！任務：${taskDescription}`);
+    currentRalphLoop.start().catch(e => {
+        outputChannel.appendLine(`[Error] Loop failed: ${e.message}`);
+        vscode.window.showErrorMessage(`迴圈執行失敗：${e.message}`);
+    });
 }
 
 /**
  * Cancel the current loop
  */
 async function cancelLoop() {
+    if (!currentRalphLoop || !currentRalphLoop.isRunning) {
+        vscode.window.showInformationMessage('沒有正在執行的迴圈。');
+        return;
+    }
+
     const confirm = await vscode.window.showWarningMessage(
-        'Are you sure you want to cancel the current loop?',
+        '確定要取消目前的迴圈嗎？',
         { modal: true },
-        'Yes, Cancel'
+        '是，取消'
     );
 
-    if (confirm !== 'Yes, Cancel') return;
+    if (confirm !== '是，取消') return;
 
-    const workspaceFolders = vscode.workspace.workspaceFolders;
-    if (!workspaceFolders || workspaceFolders.length === 0) return;
+    outputChannel.appendLine('[Cancel] 正在停止迴圈...');
+    currentRalphLoop.cancel();
 
-    const workspacePath = workspaceFolders[0].uri.fsPath;
-    const scriptPath = path.join(__dirname, 'commands', 'cancel-loop.sh');
+    currentState = { status: 'cancelled' };
+    updateStatusBar();
 
-    outputChannel.appendLine('[Cancel] Stopping loop...');
-
-    exec(`bash "${scriptPath}"`, { cwd: workspacePath }, (error, stdout, stderr) => {
-        if (error) {
-            outputChannel.appendLine(`[Error] ${error.message}`);
-            return;
-        }
-        if (stdout) outputChannel.appendLine(stdout);
-        if (stderr) outputChannel.appendLine(stderr);
-
-        vscode.window.showInformationMessage('Loop cancelled.');
-        updateStatusBar();
-    });
+    vscode.window.showInformationMessage('迴圈已取消。');
 }
 
 /**
