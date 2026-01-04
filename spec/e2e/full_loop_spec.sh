@@ -59,6 +59,7 @@ EOF
             
             When run source ./hooks/on_stop.sh
             The status should be success
+            The stderr should include '[for-loop]'
             The output should include '已達'
         End
     End
@@ -70,6 +71,7 @@ EOF
             
             When run source ./hooks/on_stop.sh
             The status should be success
+            The stderr should include '[for-loop]'
         End
     End
 End
