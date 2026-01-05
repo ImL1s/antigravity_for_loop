@@ -31,3 +31,9 @@ node_modules/
 # VSCode Test
 .vscode-test/
 .wdio-vscode-service/
+
+# Logs and temporary test files
+*.log
+.playwright-mcp/
+test-results/
+test-project/
