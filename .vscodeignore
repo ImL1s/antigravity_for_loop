@@ -19,8 +19,17 @@ spec/
 .vscode-test.mjs
 wdio.conf.js
 
-# Build tools
-node_modules/
+# Build tools - keep node_modules (has runtime deps like ws)
+# Only exclude devDependencies
+node_modules/@types/
+node_modules/@vscode/
+node_modules/@wdio/
+node_modules/@playwright/
+node_modules/mocha/
+node_modules/glob/
+node_modules/vscode-extension-tester/
+node_modules/wdio-vscode-service/
+node_modules/@mshanemc/
 *.vsix
 
 # Documentation (internal)

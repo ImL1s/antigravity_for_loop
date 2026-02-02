@@ -1228,44 +1228,40 @@ function activate(context) {
         log: (msg) => outputChannel.appendLine(msg)
     });
 
-    // Check if CDP is enabled and prompt user if not
-    if (relauncher.isCDPEnabled()) {
-        outputChannel.appendLine('[Init] CDP flag detected in process args');
+    // Check CDP by actually trying to connect (more reliable than checking args)
+    outputChannel.appendLine('[Init] Checking CDP connection...');
 
-        // Try to connect to CDP on startup (non-blocking)
-        cdpManager.tryConnect().then(connected => {
-            if (connected) {
-                outputChannel.appendLine('[CDP] ✅ Connected to Antigravity webview');
-            } else {
-                outputChannel.appendLine('[CDP] ⚠️ Could not connect - will retry on injection');
-            }
-        }).catch(() => {});
-    } else {
-        outputChannel.appendLine('[Init] ⚠️ CDP not enabled - auto-injection will require manual setup');
+    // Try to connect to CDP first
+    cdpManager.tryConnect().then(async connected => {
+        if (connected) {
+            outputChannel.appendLine('[CDP] ✅ Connected to Antigravity webview');
+            relauncher._cdpVerified = true;
+        } else {
+            outputChannel.appendLine('[CDP] ⚠️ Could not connect to CDP port');
 
-        // Show a notification with action button
-        vscode.window.showWarningMessage(
-            'Antigravity For Loop: CDP not enabled. Auto-Accept and prompt injection require CDP.',
-            'Enable CDP',
-            'Learn More',
-            'Dismiss'
-        ).then(choice => {
-            if (choice === 'Enable CDP') {
-                enableCDP();
-            } else if (choice === 'Learn More') {
-                outputChannel.show();
-                outputChannel.appendLine('\n=== CDP Setup Instructions ===');
-                outputChannel.appendLine('CDP (Chrome DevTools Protocol) allows the extension to:');
-                outputChannel.appendLine('  - Automatically click Accept buttons');
-                outputChannel.appendLine('  - Inject prompts directly into chat');
-                outputChannel.appendLine('  - Submit messages programmatically');
-                outputChannel.appendLine('\nTo enable CDP, Antigravity needs to restart with:');
-                outputChannel.appendLine('  --remote-debugging-port=9000');
-                outputChannel.appendLine('\nClick "Enable CDP" in the For Loop menu to set this up.');
-                outputChannel.appendLine('================================\n');
-            }
-        });
-    }
+            // Only show warning if CDP is really not available
+            vscode.window.showWarningMessage(
+                'Antigravity For Loop: CDP not enabled. Auto-Accept and prompt injection require CDP.',
+                'Enable CDP',
+                'Learn More',
+                'Dismiss'
+            ).then(choice => {
+                if (choice === 'Enable CDP') {
+                    enableCDP();
+                } else if (choice === 'Learn More') {
+                    outputChannel.show();
+                    outputChannel.appendLine('\n=== CDP Setup Instructions ===');
+                    outputChannel.appendLine('CDP (Chrome DevTools Protocol) allows the extension to:');
+                    outputChannel.appendLine('  - Automatically click Accept buttons');
+                    outputChannel.appendLine('  - Inject prompts directly into chat');
+                    outputChannel.appendLine('  - Submit messages programmatically');
+                    outputChannel.appendLine('\nTo enable CDP, start Antigravity with:');
+                    outputChannel.appendLine('  /Applications/Antigravity.app/Contents/MacOS/Electron --remote-debugging-port=9000');
+                    outputChannel.appendLine('================================\n');
+                }
+            });
+        }
+    }).catch(() => { });
 
     // Create status bar item (high priority to be visible)
     statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 10000);
