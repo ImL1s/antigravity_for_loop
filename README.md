@@ -1,5 +1,15 @@
 # Antigravity For Loop
 
+> **⚠️ SUPERSEDED — archived 2026-08**
+>
+> This extension's purpose is now natively covered by newer tooling, so the repo is archived as a historical reference:
+>
+> - **Google Antigravity native hooks** (Stop-condition hooks + forced continuation, shipped in Antigravity 2.0 / CLI 1.1.x, May–Jul 2026) — the same "keep working until tests pass" loop without CDP / DOM automation.
+> - **[oh-my-agy](https://github.com/ImL1s/oh-my-agy) v0.5** — your Antigravity plugin implementing the Ralph Loop natively in-session (`/oh-my-agy:ralph`, plus `ultrawork` / `ultraqa` / `verify` gates).
+> - **Claude Code's [ralph-wiggum](https://github.com/anthropics/claude-code/tree/main/plugins/ralph-wiggum) plugin** — the original inspiration, still maintained.
+>
+> The CDP mechanism this extension relied on (driving the Antigravity IDE Agent Manager webview) targets a UI surface Google announced removing from the IDE (Antigravity 2.0 launch, 2026-05-19). The script-driven loop (`commands/*.sh` + `.agent/workflows/for-loop.md`) remains usable as-is for Antigravity IDE agent workflows.
+
 **Ralph Loop for Antigravity** - Autonomous AI development loop that keeps the AI agent working until tests pass or max iterations reached.
 
 Inspired by Claude Code's [Ralph Wiggum](https://github.com/anthropics/claude-code/tree/main/plugins/ralph-wiggum) plugin, redesigned for **Google Antigravity IDE**.
