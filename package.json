@@ -11,7 +11,7 @@
         "url": "https://github.com/iml1s/antigravity_for_loop"
     },
     "engines": {
-        "vscode": "^1.107.0"
+        "vscode": "^1.100.0"
     },
     "categories": [
         "Other",
@@ -123,7 +123,7 @@
         "@mshanemc/vscode-test-playwright": "^0.0.1-beta14",
         "@playwright/test": "^1.57.0",
         "@types/mocha": "^10.0.10",
-        "@types/vscode": "^1.107.0",
+        "@types/vscode": "^1.100.0",
         "@vscode/test-cli": "^0.0.12",
         "@vscode/test-electron": "^2.5.2",
         "@wdio/cli": "^8.46.0",
